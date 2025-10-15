@@ -15,24 +15,24 @@ mkdir -p $LOG_FOLDER
 CHECK_ROOT () {
     if [ $USERID -ne 0 ] 
     then 
-        echo -e " $R ERROR...Please run this script with root access $N" tee -a $LOG_FILE
+        echo -e " $R ERROR...Please run this script with root access $N" | tee -a $LOG_FILE
         exit 1
     else 
-        echo -e " $Y You are running the script wit root access $N" tee -a $LOG_FILE   
+        echo -e " $Y You are running the script wit root access $N" | tee -a $LOG_FILE   
     fi     
 }
 
 VALIDATE () {
     if [ $1 -ne 0 ]
     then 
-        echo -e  "$2 is.... $R ERROR $N" tee -a $LOG_FILE
+        echo -e  "$2 is.... $R ERROR $N" | tee -a $LOG_FILE
         exit 1
     else 
-        echo -e   "$2 is....$G SUCCESS $N"  tee -a $LOG_FILE  
+        echo -e   "$2 is....$G SUCCESS $N" | tee -a $LOG_FILE  
     fi    
 }
 
-echo  "Script started running at: $(date)" &>> $LOG_FILE
+echo  "Script started running at: $(date)" | tee -a $LOG_FILE
 CHECK_ROOT 
 
 cp /$SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOG_FILE
