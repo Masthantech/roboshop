@@ -85,8 +85,15 @@ dnf install mongodb-mongosh -y &>>$LOG_FILE
 VALIDATE $? "Installing mongodb shell" 
 
 
+STATUS=$(mongosh --host mongodb.shaik.cloud --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
 
-
+if [ $STATUS -lt 0 ]
+then 
+    mongosh --host MONGODB-SERVER-IPADDRESS </app/db/master-data.js &>>$LOG_FILE
+    VALIDATE $? "Loading the data into database" 
+else 
+    echo -e "Data is already loaded into database... $Y SKIPPING $N"
+fi    
 
 
 
