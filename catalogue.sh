@@ -37,33 +37,35 @@ VALIDATE () {
 
 CHECK_ROOT 
 
-dnf module disable nodejs -y
+dnf module disable nodejs -y &>> $LOG_FILE
 VALIDATE $? "Disabling nodejs"
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>> $LOG_FILE
 VALIDATE $? "Enabling nodejs"
 
-dnf install nodejs -y
+dnf install nodejs -y &>> $LOG_FILE
 VALIDATE $? "Installing nodejs"
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>> $LOG_FILE
 VALIDATE $? "Creating system user roboshop"
 
 mkdir /app 
 
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
+curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>> $LOG_FILE
 VALIDATE $? "Downloading application code"
 
 cd /app 
-rm -rf /app/*
+rm -rf /app/* &>> $LOG_FILE
 
-unzip /tmp/catalogue.zip
+unzip /tmp/catalogue.zip &>> $LOG_FILE
 VALIDATE $? "Unzipping application code in app directory"
 
 cd /app 
 
-npm install
+npm install &>> $LOG_FILE
 VALIDATE $? "Installing application dependencies using npm" 
+
+cp /$SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service  &>> $LOG_FILE
 
 systemctl daemon-reload
 systemctl enable catalogue
