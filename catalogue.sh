@@ -37,48 +37,48 @@ VALIDATE () {
 
 CHECK_ROOT 
 
-dnf module disable nodejs -y &>> $LOG_FILE
+dnf module disable nodejs -y &>>$LOG_FILE
 VALIDATE $? "Disabling nodejs"
 
-dnf module enable nodejs:20 -y &>> $LOG_FILE
+dnf module enable nodejs:20 -y &>>$LOG_FILE
 VALIDATE $? "Enabling nodejs"
 
-dnf install nodejs -y &>> $LOG_FILE
+dnf install nodejs -y &>>$LOG_FILE
 VALIDATE $? "Installing nodejs"
 
 
 id roboshop 
+
 if [ $? -ne 0 ]
 then 
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>> $LOG_FILE
     VALIDATE $? "Creating system user roboshop"
 else 
-    echo -e "System user already exists...$Y SKIPPING $N"  &>> $LOG_FILE  
-fi 
+    echo -e "System user already exists...$Y SKIPPING $N"  &>>$LOG_FILE  
+fi
 
-mkdir /app &>> $LOG_FILE
+mkdir -p /app
 VALIDATE $? "Creating APP directory"
 
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>> $LOG_FILE
 VALIDATE $? "Downloading application code"
 
 cd /app 
-rm -rf /app/* &>> $LOG_FILE
+rm -rf /app/* &>>$LOG_FILE
 
-unzip /tmp/catalogue.zip &>> $LOG_FILE
+unzip /tmp/catalogue.zip &>>$LOG_FILE
 VALIDATE $? "Unzipping application code in app directory"
 
 cd /app 
 
-npm install &>> $LOG_FILE
+npm install &>>$LOG_FILE
 VALIDATE $? "Installing application dependencies using npm" 
 
-cp /$SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service  &>> $LOG_FILE
+cp /$SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service  &>>$LOG_FILE
 
 systemctl daemon-reload
 systemctl enable catalogue
 systemctl start catalogue
-
 VALIDATE $? "Starting the catalogue service"
 
 
