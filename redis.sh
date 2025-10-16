@@ -2,7 +2,7 @@
 Start_time=$(date +%s)
 USERID=$(id -u)
 R="\e[31m"
-g="\e[32m"
+G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
