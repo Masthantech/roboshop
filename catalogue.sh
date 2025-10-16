@@ -89,7 +89,7 @@ STATUS=$(mongosh --host mongodb.shaik.cloud --eval 'db.getMongo().getDBNames().i
 
 if [ $STATUS -lt 0 ]
 then 
-    mongosh --host MONGODB-SERVER-IPADDRESS </app/db/master-data.js &>>$LOG_FILE
+    mongosh --host mongodb.shaik.cloud </app/db/master-data.js &>>$LOG_FILE
     VALIDATE $? "Loading the data into database" 
 else 
     echo -e "Data is already loaded into database... $Y SKIPPING $N"
