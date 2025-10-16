@@ -50,7 +50,7 @@ VALIDATE $? "Editing  mongod conf file to allow remote connections"
 
 systemctl restart mongod &>> $LOG_FILE
 VALIDATE $? "Restarting MongoDB"
-end_time = $(date +%s)
+end_time=$(date +%s)
 
 Time_taken=$(($end_time - $start_time))
 echo -e " Script executed successfully, $Y Time taken is: $Time_taken Seconds $N"
