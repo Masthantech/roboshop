@@ -1,5 +1,5 @@
 #!/bin bash
-
+Start_time=$(date +%s)
 USERID=$(id -u)
 R="\e[31m"
 g="\e[32m"
@@ -50,5 +50,8 @@ VALIDATE $? "Editing  mongod conf file to allow remote connections"
 
 systemctl restart mongod &>> $LOG_FILE
 VALIDATE $? "Restarting MongoDB"
+end_time = $(date +%s)
 
+Time_taken = $(($end_time-$start_time))
+echo "Time taken is: $Time_taken"
 
