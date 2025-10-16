@@ -58,13 +58,13 @@ fi
 mkdir -p /app
 VALIDATE $? "Creating APP directory"
 
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>> $LOG_FILE
+curl -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip &>> $LOG_FILE
 VALIDATE $? "Downloading application code"
 
 rm -rf /app/* &>>$LOG_FILE
 cd /app 
 
-unzip /tmp/catalogue.zip &>>$LOG_FILE
+unzip /tmp/cart.zip &>>$LOG_FILE
 VALIDATE $? "Unzipping application code in app directory"
 
 cd /app 
@@ -72,61 +72,17 @@ cd /app
 npm install &>>$LOG_FILE
 VALIDATE $? "Installing application dependencies using npm" 
 
-cp /$SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service  &>>$LOG_FILE
+cp /$SCRIPT_DIR/cart.service /etc/systemd/system/cart.service  &>>$LOG_FILE
 
 systemctl daemon-reload &>>$LOG_FILE
-systemctl enable catalogue &>>$LOG_FILE
-systemctl start catalogue
-VALIDATE $? "Starting the catalogue service"
-
-cp /$SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo 
-dnf install mongodb-mongosh -y &>>$LOG_FILE
-VALIDATE $? "Installing mongodb shell" 
-
-
-STATUS=$(mongosh --host mongodb.shaik.cloud --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
-
-if [ $STATUS -lt 0 ]
-then 
-    mongosh --host mongodb.shaik.cloud </app/db/master-data.js &>>$LOG_FILE
-    VALIDATE $? "Loading the data into database" 
-else 
-    echo -e "Data is already loaded into database... $Y SKIPPING $N"
-fi    
-
+systemctl enable cart &>>$LOG_FILE
+systemctl start cart
+VALIDATE $? "Starting the cart service"
 
 End_time=$(date +%s)
 
 Total_time=$(( $End_time - $Start_time ))
 
 echo -e "Script executed successfully, $Y Time taken : $Total_time Seconds $N" | tee -a $LOG_FILE
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

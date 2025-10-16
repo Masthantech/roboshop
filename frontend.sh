@@ -70,4 +70,9 @@ VALIDATE $? "Copying the nginx conf file "
 systemctl restart nginx &>>$LOG_FILE
 VALIDATE $? "Restarting the nginx"
 
+End_time=$(date +%s)
+
+Total_time=$(( $End_time - $Start_time ))
+
+echo -e "Script executed successfully, $Y Time taken : $Total_time Seconds $N" | tee -a $LOG_FILE
 
