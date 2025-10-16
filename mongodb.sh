@@ -52,6 +52,6 @@ systemctl restart mongod &>> $LOG_FILE
 VALIDATE $? "Restarting MongoDB"
 end_time = $(date +%s)
 
-Time_taken = $(($end_time-$start_time))
-echo "Time taken is: $Time_taken"
+Time_taken=$(($end_time - $start_time))
+echo -e " Script executed successfully, $Y Time taken is: $Time_taken Seconds $N"
 
