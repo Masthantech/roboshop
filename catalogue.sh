@@ -20,7 +20,7 @@ CHECK_ROOT () {
         echo -e " $R ERROR...Please run this script with root access $N" | tee -a $LOG_FILE
         exit 1
     else 
-        echo -e " $Y You are running the script wit root access $N" | tee -a $LOG_FILE   
+        echo -e " $Y You are running the script with root access $N" | tee -a $LOG_FILE   
     fi     
 }
 
@@ -46,8 +46,15 @@ VALIDATE $? "Enabling nodejs"
 dnf install nodejs -y &>> $LOG_FILE
 VALIDATE $? "Installing nodejs"
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>> $LOG_FILE
-VALIDATE $? "Creating system user roboshop"
+
+id roboshop 
+if [ $? -ne 0 ]
+then 
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>> $LOG_FILE
+    VALIDATE $? "Creating system user roboshop"
+else 
+    echo -e "System user already exists...$Y SKIPPING $N"  &>> $LOG_FILE  
+fi 
 
 mkdir /app 
 
