@@ -53,11 +53,7 @@ VALIDATE $? "Restarting MongoDB"
 End_time=$(date +%s)
 
 Time_taken=$(($End_time - $Start_time))
-echo -e " Script executed successfully, $Y Time taken is: $Time_taken Seconds $N"
+echo -e "Script executed successfully, $Y Time taken is: $Time_taken Seconds $N"
 
-<<COMMENT
-START_TIME=$(date +%s)
-END_TIME=$(date +%s)
-TOTAL_TIME=$(($END_TIME - $START_TIME))
-COMMENT
+
 
