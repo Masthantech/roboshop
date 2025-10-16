@@ -46,7 +46,7 @@ VALIDATE $? "Enabling nodejs"
 dnf install nodejs -y &>>$LOG_FILE
 VALIDATE $? "Installing nodejs"
 
-id roboshop
+id roboshop 
 if [ $? -ne 0 ]
 then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
@@ -61,8 +61,8 @@ VALIDATE $? "Creating APP directory"
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>> $LOG_FILE
 VALIDATE $? "Downloading application code"
 
-cd /app 
 rm -rf /app/* &>>$LOG_FILE
+cd /app 
 
 unzip /tmp/catalogue.zip &>>$LOG_FILE
 VALIDATE $? "Unzipping application code in app directory"
@@ -74,11 +74,15 @@ VALIDATE $? "Installing application dependencies using npm"
 
 cp /$SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service  &>>$LOG_FILE
 
-systemctl daemon-reload
-systemctl enable catalogue
+systemctl daemon-reload &>>$LOG_FILE
+systemctl enable catalogue &>>$LOG_FILE
 systemctl start catalogue
 VALIDATE $? "Starting the catalogue service"
 
+
+cp /$SCRIPT_DIR/mongo.reo /etc/yum.repos.d/mongo.repo 
+dnf install mongodb-mongosh -y &>>$LOG_FILE
+VALIDATE $? "Installing mongodb shell" 
 
 
 
