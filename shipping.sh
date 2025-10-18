@@ -88,9 +88,9 @@ mysql -h mysql.shaik.cloud -u root -pRoboShop@1 -e 'use cities;' &>>$LOG_FILE
 if [ $? -ne 0 ]
 then 
     echo -e "data is not loaded into database...$Y Loading now $N"
-    mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -pRoboShop@1 < /app/db/schema.sql &>>$LOG_FILE
-    mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -pRoboShop@1 < /app/db/app-user.sql &>>$LOG_FILE
-    mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -pRoboShop@1 < /app/db/master-data.sql &>>$LOG_FILE
+    mysql -h mysql.shaik.cloud -uroot -pRoboShop@1 < /app/db/schema.sql &>>$LOG_FILE
+    mysql -h mysql.shaik.cloud -uroot -pRoboShop@1 < /app/db/app-user.sql &>>$LOG_FILE
+    mysql -h mysql.shaik.cloud -uroot -pRoboShop@1 < /app/db/master-data.sql &>>$LOG_FILE
 else 
     echo -e "data is already loaded into database...$Y SKIPPING $N"
 fi
@@ -105,6 +105,8 @@ End_time=$(date +%s)
 Total_time=$(( $End_time - $Start_time ))
 
 echo -e "Script executed successfully, $Y Time taken : $Total_time Seconds $N" | tee -a $LOG_FILE
+
+
 
 
 
