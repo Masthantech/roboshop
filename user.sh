@@ -37,6 +37,7 @@ VALIDATE () {
 
 CHECK_ROOT 
 
+
 dnf module disable nodejs -y &>>$LOG_FILE
 VALIDATE $? "Disabling nodejs"
 
