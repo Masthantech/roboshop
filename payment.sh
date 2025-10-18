@@ -13,7 +13,7 @@ SCRIPT_DIR=$PWD
 
 mkdir -p $LOG_FOLDER 
 
-echo -e "script started running at: $(date)" | tee -a &LOG_FILE
+echo -e "script started running at: $(date)" | tee -a $LOG_FILE
 
 ROOT_CHECK () {
     if [ $USERID -ne 0 ]

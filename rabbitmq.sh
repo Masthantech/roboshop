@@ -50,7 +50,7 @@ systemctl enable rabbitmq-server &>> $LOG_FILE
 systemctl start rabbitmq-server  &>> $LOG_FILE
 VALIDATE $? "Starting Rabbitmq server" 
 
-id roboshop123 
+id roboshop
 
 if [ $? -ne 0 ]
 then 
