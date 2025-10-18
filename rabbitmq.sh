@@ -61,8 +61,8 @@ fi
 
 rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"  &>> $LOG_FILE
 
-END_TIME=$(date +%s)
-TOTAL_TIME=$(( $END_TIME - $START_TIME ))
+End_time=$(date +%s)
+TOTAL_TIME=$(( $End_time - $Start_time ))
 
 echo -e "Script exection completed successfully, $Y time taken: $TOTAL_TIME seconds $N" | tee -a $LOG_FILE
 
