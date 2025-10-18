@@ -80,6 +80,6 @@ End_time=$(date +%s)
 
 Time_taken=$(( $End_time - $Start_time ))
 
-echo -e "Script exection completed successfully, $Y time taken: $TOTAL_TIME seconds $N" | tee -a $LOG_FILE
+echo -e "Script exection completed successfully, $Y time taken: $Time_taken seconds $N" | tee -a $LOG_FILE
 
 
